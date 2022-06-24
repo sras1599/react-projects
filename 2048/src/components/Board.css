@@ -1,4 +1,5 @@
 #board {
+  position: relative;
   width: var(--side-length);
   height: var(--side-length);
 

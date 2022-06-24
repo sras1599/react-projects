@@ -1,0 +1,12 @@
+#board {
+  width: var(--side-length);
+  height: var(--side-length);
+
+  border-radius: 2%;
+  padding: var(--cell-gap);
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: repeat(var(--board-size), 1fr);
+  grid-template-rows: repeat(var(--board-size), 1fr);
+  gap: var(--cell-gap);
+}

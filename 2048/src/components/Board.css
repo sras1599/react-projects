@@ -2,12 +2,13 @@
   position: relative;
   width: var(--side-length);
   height: var(--side-length);
+  --cell-size: calc((var(--side-length) / var(--board-size)) - var(--cell-gap) - (var(--cell-gap) / var(--board-size)));
 
   border-radius: 2%;
   padding: var(--cell-gap);
   background-color: lightgray;
   display: grid;
-  grid-template-columns: repeat(var(--board-size), 1fr);
-  grid-template-rows: repeat(var(--board-size), 1fr);
+  grid-template-columns: repeat(var(--board-size), var(--cell-size));
+  grid-template-rows: repeat(var(--board-size), var(--cell-size));
   gap: var(--cell-gap);
 }

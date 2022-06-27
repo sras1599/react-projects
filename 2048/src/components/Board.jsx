@@ -11,6 +11,26 @@ export default class BoardView extends Component {
     this.state = { board: new Board() };
   }
 
+  onKeyDown(event) {
+    const { key: direction } = event;
+    const isValidInput = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(direction);
+
+    if (isValidInput) {
+      event.preventDefault();
+      const normalizedDirection = direction.replace("Arrow", "").toLowerCase();
+
+      this.state.board.move(normalizedDirection);
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.onKeyDown.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.onKeyDown.bind(this));
+  }
+
   render() {
     const { cells, size, tiles } = this.state.board;
     const cellGap = `${100 / (size * size * 4)}vmin`;
@@ -38,6 +58,33 @@ class Board {
     this.randomEmptyTile.addCell();
     this.randomEmptyTile.addCell();
   }
+
+  move(direction) {
+    switch (direction) {
+      case "up":
+        this.moveUp();
+        break;
+      case "down":
+        this.moveDown();
+        break;
+      case "left":
+        this.moveLeft();
+        break;
+      case "right":
+        this.moveRight();
+        break;
+      default:
+        break;
+    }
+  }
+
+  moveUp() {}
+
+  moveDown() {}
+
+  moveLeft() {}
+
+  moveRight() {}
 
   get cells() {
     return this.tiles.map((tile) => tile.cell).filter(Boolean);

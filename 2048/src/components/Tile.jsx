@@ -1,10 +1,11 @@
 import { Component } from "react";
+import { GRID_SIZE } from "../constants";
 import "./Tile.css";
 
 export class Tile {
-  constructor({ row, col }) {
-    this.row = row;
-    this.col = col;
+  constructor() {
+    this.row = Tile.counter % GRID_SIZE;
+    this.col = Math.floor(Tile.counter++ / GRID_SIZE);
     this.id = `${this.row}_${this.col}`;
   }
 }

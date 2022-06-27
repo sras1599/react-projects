@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Tile, TileView } from "./Tile";
+import { GRID_SIZE } from "../constants";
 import "./Board.css";
 
 export default class BoardView extends Component {
@@ -25,14 +26,8 @@ export default class BoardView extends Component {
 
 class Board {
   constructor() {
-    this.size = 4;
-    this.tiles = [];
-
-    for (let row = 0; row < this.size; row++) {
-      for (let col = 0; col < this.size; col++) {
-        const tile = new Tile({ row, col });
-        this.tiles.push(tile);
-      }
-    }
+    Tile.counter = 0;
+    this.size = GRID_SIZE;
+    this.tiles = Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_) => new Tile());
   }
 }

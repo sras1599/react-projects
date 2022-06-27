@@ -14,6 +14,10 @@ export class Tile {
   addCell() {
     this.cell = new Cell(this);
   }
+
+  get isEmpty() {
+    return !this.cell;
+  }
 }
 
 export class TileView extends Component {

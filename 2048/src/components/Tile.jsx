@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { GRID_SIZE } from "../constants";
+import { Cell } from "./Cell";
 import "./Tile.css";
 
 export class Tile {
@@ -8,6 +9,10 @@ export class Tile {
     this.col = Math.floor(Tile.counter++ / GRID_SIZE);
     this.id = `${this.row}_${this.row}`;
     this.cell = null;
+  }
+
+  addCell() {
+    this.cell = new Cell(this);
   }
 }
 

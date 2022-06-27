@@ -34,15 +34,13 @@ class Board {
     Tile.counter = 0;
     this.size = GRID_SIZE;
     this.tiles = Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_) => new Tile());
-    this.cells = [];
 
-    for (let i = 0; i < 2; i++) {
-      const randomEmptyTile = this.randomEmptyTile;
-      const cell = new Cell(randomEmptyTile);
+    this.randomEmptyTile.addCell();
+    this.randomEmptyTile.addCell();
+  }
 
-      randomEmptyTile.cell = cell;
-      this.cells.push(cell);
-    }
+  get cells() {
+    return this.tiles.map((tile) => tile.cell).filter(Boolean);
   }
 
   get emptyTiles() {

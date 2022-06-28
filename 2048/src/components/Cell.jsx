@@ -6,6 +6,10 @@ export class Cell {
     this.tile = tile;
     this.value = value;
   }
+
+  get id() {
+    return `cell_${this.tile.row}_${this.tile.col}`;
+  }
 }
 
 export class CellView extends Component {

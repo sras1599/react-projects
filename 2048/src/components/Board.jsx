@@ -39,10 +39,10 @@ export default class BoardView extends Component {
     return (
       <div id="board" style={style}>
         {tiles.map((tile) => (
-          <TileView tile={tile} key={randomString()}></TileView>
+          <TileView tile={tile} key={tile.id}></TileView>
         ))}
         {cells.map((cell) => (
-          <CellView cell={cell} key={randomString()}></CellView>
+          <CellView cell={cell} key={cell.id}></CellView>
         ))}
       </div>
     );

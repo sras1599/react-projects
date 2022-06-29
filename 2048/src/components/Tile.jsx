@@ -10,6 +10,10 @@ export class Tile {
     this.cell = new Cell(this, 0);
   }
 
+  populateCell() {
+    this.cell.value = Math.random() > 0.05 ? 2 : 4;
+  }
+
   get id() {
     return `tile_${this.row}_${this.col}`;
   }

@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Tile, TileView } from "./Tile";
 import { Cell, CellView } from "./Cell";
 import { GRID_SIZE } from "../constants";
-import { randomString } from "../utils";
+import { randomChoice, randomString } from "../utils";
 import "./Board.css";
 
 export default class BoardView extends Component {
@@ -55,8 +55,8 @@ class Board {
     this.size = GRID_SIZE;
     this.tiles = Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_) => new Tile());
 
-    this.randomEmptyTile.addCell();
-    this.randomEmptyTile.addCell();
+    this.randomEmptyTile.populateCell();
+    this.randomEmptyTile.populateCell();
   }
 
   move(direction) {
@@ -87,14 +87,14 @@ class Board {
   moveRight() {}
 
   get cells() {
-    return this.tiles.map((tile) => tile.cell).filter(Boolean);
+    return this.tiles.map((tile) => tile.cell).filter((cell) => cell.value !== 0);
   }
 
   get emptyTiles() {
-    return this.tiles.filter((tile) => !tile.cell);
+    return this.tiles.filter((tile) => tile.cell.value === 0);
   }
 
   get randomEmptyTile() {
-    return this.emptyTiles[Math.floor(Math.random() * this.emptyTiles.length)];
+    return randomChoice(this.emptyTiles);
   }
 }

@@ -1,9 +1,9 @@
 import { Component } from "react";
-import { Tile, TileView } from "./Tile";
-import { Cell, CellView } from "./Cell";
 import { GRID_SIZE } from "../constants";
-import { randomChoice, randomString } from "../utils";
+import { randomChoice } from "../utils";
 import "./Board.css";
+import { CellView } from "./Cell";
+import { Tile, TileView } from "./Tile";
 
 export default class BoardView extends Component {
   constructor(props) {

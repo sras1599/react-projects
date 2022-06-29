@@ -2,7 +2,7 @@ import { Component } from "react";
 import "./Cell.css";
 
 export class Cell {
-  constructor(tile, value = Math.random() > 0.05 ? 2 : 4) {
+  constructor(tile, value) {
     this.tile = tile;
     this.value = value;
   }

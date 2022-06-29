@@ -7,19 +7,15 @@ export class Tile {
   constructor() {
     this.row = Tile.counter % GRID_SIZE;
     this.col = Math.floor(Tile.counter++ / GRID_SIZE);
-    this.cell = null;
-  }
-
-  addCell() {
-    this.cell = new Cell(this);
+    this.cell = new Cell(this, 0);
   }
 
   get id() {
     return `tile_${this.row}_${this.col}`;
   }
-  
+
   get isEmpty() {
-    return !this.cell;
+    return this.cell.value === 0;
   }
 }
 

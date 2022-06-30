@@ -24,7 +24,7 @@ export class CellView extends Component {
     const power = Math.log2(value);
 
     const backgroundLightness = 100 - power * 9;
-    const fontSize = `${3 - 0.25 * value.toString().length}em`;
+    const fontSize = `${2.75 * value.toString().length}em`;
     const style = {
       "--row": row,
       "--col": col,

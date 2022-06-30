@@ -97,4 +97,20 @@ class Board {
   get randomEmptyTile() {
     return randomChoice(this.emptyTiles);
   }
+
+	get tilesByRow() {
+    return this.tiles.reduce((grid, tile) => {
+      grid[tile.row] = grid[tile.row] || [];
+      grid[tile.row][tile.col] = tile;
+			return grid;
+    }, []);
+  }
+
+  get tilesByColumn() {
+    return this.tiles.reduce((grid, tile) => {
+      grid[tile.col] = grid[tile.col] || [];
+      grid[tile.col][tile.row] = tile;
+			return grid;
+    }, []);
+  }
 }

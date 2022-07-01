@@ -100,10 +100,11 @@ class Board {
 
   _move(rowsOrColumns) {
     for (let i = 0; i < rowsOrColumns.length; i++) {
-      const row = rowsOrColumns[i];
-      shiftEmptyCellsToEnd(row);
-      mergeCells(row);
-      shiftEmptyCellsToEnd(row);
+      const rowOrColumn = rowsOrColumns[i];
+      
+      shiftEmptyCellsToEnd(rowOrColumn);
+      mergeCells(rowOrColumn);
+      shiftEmptyCellsToEnd(rowOrColumn);
     }
   }
 

@@ -1,19 +1,19 @@
 export const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-export const shiftEmptyCellsToEnd = (row) => {
+export const shiftEmptyCellsToEnd = (rowOrColumn) => {
   let shiftedElements = 0;
 
-  for (let i = 0; i < row.length; i++) {
-    const cell = row[i];
+  for (let i = 0; i < rowOrColumn.length; i++) {
+    const cell = rowOrColumn[i];
 
     if (cell.value !== 0) {
       cell.hasMoved = true;
-      [row[shiftedElements].value, cell.value] = [cell.value, row[shiftedElements].value];
+      [rowOrColumn[shiftedElements].value, cell.value] = [cell.value, rowOrColumn[shiftedElements].value];
       shiftedElements++;
     }
   }
 
-  return row;
+  return rowOrColumn;
 };
 
 export const mergeCells = (row) => {

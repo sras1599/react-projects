@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { GRID_SIZE } from "../constants";
-import { randomChoice } from "../utils";
+import { randomChoice, shiftEmptyCellsToEnd, mergeCells } from "../utils";
 import "./Board.css";
-import { CellView } from "./Cell";
+import { Cell, CellView } from "./Cell";
 import { Tile, TileView } from "./Tile";
 
 export default class BoardView extends Component {
@@ -12,6 +12,7 @@ export default class BoardView extends Component {
   }
 
   onKeyDown(event) {
+    const { board } = this.state;
     const { key: direction } = event;
     const isValidInput = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(direction);
 
@@ -19,7 +20,7 @@ export default class BoardView extends Component {
       event.preventDefault();
       const normalizedDirection = direction.replace("Arrow", "").toLowerCase();
 
-      this.state.board.move(normalizedDirection);
+      this.setState({ board: board.move(normalizedDirection) });
     }
   }
 
@@ -41,9 +42,11 @@ export default class BoardView extends Component {
         {tiles.map((tile) => (
           <TileView tile={tile} key={tile.id}></TileView>
         ))}
-        {cells.map((cell) => (
-          <CellView cell={cell} key={cell.id}></CellView>
-        ))}
+        {cells
+          .filter((cell) => !cell.isEmpty)
+          .map((cell) => (
+            <CellView cell={cell} key={cell.id}></CellView>
+          ))}
       </div>
     );
   }
@@ -51,66 +54,84 @@ export default class BoardView extends Component {
 
 class Board {
   constructor() {
-    Tile.counter = 0;
     this.size = GRID_SIZE;
-    this.tiles = Array.from({ length: GRID_SIZE * GRID_SIZE }).map((_) => new Tile());
+    this.tiles = [];
+    this.cells = [];
 
-    this.randomEmptyTile.populateCell();
-    this.randomEmptyTile.populateCell();
+    for (let i = 0; i < this.size * this.size; i++) {
+      const row = i % this.size;
+      const col = Math.floor(i / this.size);
+
+      this.tiles.push(new Tile({ row, col }));
+      this.cells.push(new Cell({ row, col }));
+    }
+
+    this.randomEmptyCell.setValue();
+    this.randomEmptyCell.setValue();
   }
 
   move(direction) {
     switch (direction) {
       case "up":
-        this.moveUp();
+        this._move(this.cellsByCol);
         break;
       case "down":
-        this.moveDown();
+        this._move(this.cellsByCol.map((col) => col.reverse()));
         break;
       case "left":
-        this.moveLeft();
+        this._move(this.cellsByRow);
         break;
       case "right":
-        this.moveRight();
+        this._move(this.cellsByRow.map((row) => row.reverse()));
         break;
       default:
         break;
     }
+
+    this.cells.forEach((cell) => {
+      cell.hasMerged = false;
+    });
+    this.randomEmptyCell.setValue();
+
+    return this;
   }
 
-  moveUp() {}
-
-  moveDown() {}
-
-  moveLeft() {}
-
-  moveRight() {}
-
-  get cells() {
-    return this.tiles.map((tile) => tile.cell).filter((cell) => cell.value !== 0);
+  _move(rowsOrColumns) {
+    for (let i = 0; i < rowsOrColumns.length; i++) {
+      const row = rowsOrColumns[i];
+      shiftEmptyCellsToEnd(row);
+      mergeCells(row);
+      shiftEmptyCellsToEnd(row);
+    }
   }
 
-  get emptyTiles() {
-    return this.tiles.filter((tile) => tile.cell.value === 0);
+  get emptyCells() {
+    return this.cells.filter((cell) => cell.value === 0);
   }
 
-  get randomEmptyTile() {
-    return randomChoice(this.emptyTiles);
+  get randomEmptyCell() {
+    return randomChoice(this.emptyCells);
   }
 
-	get tilesByRow() {
-    return this.tiles.reduce((grid, tile) => {
-      grid[tile.row] = grid[tile.row] || [];
-      grid[tile.row][tile.col] = tile;
-			return grid;
-    }, []);
+  get cellsByCol() {
+    const columns = new Array(this.size).fill().map(() => []);
+
+    for (let i = 0; i < this.cells.length; i++) {
+      const cell = this.cells[i];
+      columns[cell.col].push(cell);
+    }
+
+    return columns.map((col) => col.sort((cell1, cell2) => cell1.row - cell2.row));
   }
 
-  get tilesByColumn() {
-    return this.tiles.reduce((grid, tile) => {
-      grid[tile.col] = grid[tile.col] || [];
-      grid[tile.col][tile.row] = tile;
-			return grid;
-    }, []);
+  get cellsByRow() {
+    const rows = new Array(this.size).fill().map(() => []);
+
+    for (let i = 0; i < this.cells.length; i++) {
+      const cell = this.cells[i];
+      rows[cell.row].push(cell);
+    }
+
+    return rows.map((row) => row.sort((cell1, cell2) => cell1.col - cell2.col));
   }
 }

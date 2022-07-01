@@ -1,25 +1,10 @@
 import { Component } from "react";
-import { GRID_SIZE } from "../constants";
-import { Cell } from "./Cell";
+import { Square } from "../utils";
 import "./Tile.css";
 
-export class Tile {
-  constructor() {
-    this.row = Tile.counter % GRID_SIZE;
-    this.col = Math.floor(Tile.counter++ / GRID_SIZE);
-    this.cell = new Cell(this, 0);
-  }
-
-  populateCell() {
-    this.cell.value = Math.random() > 0.05 ? 2 : 4;
-  }
-
-  get id() {
-    return `tile_${this.row}_${this.col}`;
-  }
-
-  get isEmpty() {
-    return this.cell.value === 0;
+export class Tile extends Square {
+  get type() {
+    return "tile";
   }
 }
 

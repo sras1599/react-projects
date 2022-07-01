@@ -7,6 +7,9 @@
   border-radius: 2%;
   padding: var(--cell-gap);
   background-color: lightgray;
+}
+
+#board > .tiles {
   display: grid;
   grid-template-columns: repeat(var(--board-size), var(--cell-size));
   grid-template-rows: repeat(var(--board-size), var(--cell-size));

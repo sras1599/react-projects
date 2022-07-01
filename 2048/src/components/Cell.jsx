@@ -1,10 +1,10 @@
 import { Component } from "react";
-import "./Cell.css";
 import { Square } from "../utils";
+import "./Cell.css";
 
 export class Cell extends Square {
-  constructor({ row, col }) {
-    super({ row, col });
+  constructor(args) {
+    super(args);
     this.value = 0;
     this.hasMoved = false;
     this.hasMerged = false;
@@ -12,10 +12,6 @@ export class Cell extends Square {
 
   setValue(value) {
     this.value = value ? value : Math.random() > 0.05 ? 2 : 4;
-  }
-
-  get type() {
-    return "cell";
   }
 
   get isEmpty() {
@@ -44,10 +40,8 @@ export class CellView extends Component {
       "--font-size": fontSize,
     };
 
-    return (
-      <div className={`cell${!hasMoved ? " new" : ""}`} style={style}>
-        {value}
-      </div>
-    );
+    return <div className={`cell${!hasMoved ? " new" : ""}`} data-value={cell.value} style={style}>
+      {value}
+    </div>;
   }
 }

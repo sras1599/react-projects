@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { GRID_SIZE } from "../constants";
-import { randomChoice, shiftEmptyCellsToEnd, mergeCells } from "../utils";
+import { mergeCells, randomChoice, shiftEmptyCellsToEnd } from "../utils";
 import "./Board.css";
 import { Cell, CellView } from "./Cell";
 import { Tile, TileView } from "./Tile";
@@ -39,14 +39,16 @@ export default class BoardView extends Component {
 
     return (
       <div id="board" style={style}>
-        {tiles.map((tile) => (
-          <TileView tile={tile} key={tile.id}></TileView>
-        ))}
-        {cells
-          .filter((cell) => !cell.isEmpty)
-          .map((cell) => (
+        <div className="tiles">
+          {tiles.map((tile) => (
+            <TileView tile={tile} key={tile.id}></TileView>
+          ))}
+        </div>
+        <div className="cells">
+          {cells.map((cell) => (
             <CellView cell={cell} key={cell.id}></CellView>
           ))}
+        </div>
       </div>
     );
   }
@@ -62,8 +64,8 @@ class Board {
       const row = i % this.size;
       const col = Math.floor(i / this.size);
 
-      this.tiles.push(new Tile({ row, col }));
-      this.cells.push(new Cell({ row, col }));
+      this.tiles.push(new Tile({ row, col, id: i }));
+      this.cells.push(new Cell({ row, col, id: i }));
     }
 
     this.randomEmptyCell.setValue();

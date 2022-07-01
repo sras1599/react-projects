@@ -2,11 +2,7 @@ import { Component } from "react";
 import { Square } from "../utils";
 import "./Tile.css";
 
-export class Tile extends Square {
-  get type() {
-    return "tile";
-  }
-}
+export class Tile extends Square {}
 
 export class TileView extends Component {
   constructor(props) {

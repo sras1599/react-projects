@@ -6,19 +6,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size);
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
 
   left: calc(var(--cell-gap) + (var(--cell-size) * var(--col) + var(--cell-gap) * var(--col)));
   top: calc(var(--cell-gap) + (var(--cell-size) * var(--row)) + var(--cell-gap) * var(--row));
 
   background-color: hsl(200, 100%, var(--bg-lightness));
   color: hsl(200, 25%, var(--text-lightness));
+  font-size: var(--font-size);
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .cell.new {
   animation: show 200ms ease-in-out;
+}
+
+.cell[data-value="0"] {
+  display: none;
 }
 
 @keyframes show {

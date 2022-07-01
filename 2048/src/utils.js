@@ -32,15 +32,9 @@ export const mergeCells = (row) => {
 };
 
 export class Square {
-  constructor({ row, col }) {
+  constructor({ row, col, id }) {
     this.row = row;
     this.col = col;
-  }
-  get type() {
-    throw new Error("the type getter must be overriden");
-  }
-
-  get id() {
-    return `${this.type}_${this.row}_${this.col}`;
+    this.id = id;
   }
 }

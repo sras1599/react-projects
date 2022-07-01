@@ -40,8 +40,10 @@ export class CellView extends Component {
       "--font-size": fontSize,
     };
 
-    return <div className={`cell${!hasMoved ? " new" : ""}`} data-value={cell.value} style={style}>
-      {value}
-    </div>;
+    return (
+      <div className={`cell${!hasMoved ? " new" : ""}`} data-value={cell.value} style={style}>
+        {value}
+      </div>
+    );
   }
 }

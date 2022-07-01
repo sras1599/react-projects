@@ -1,20 +1,30 @@
 export const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export const shiftEmptyCellsToEnd = (rowOrColumn) => {
-  let shiftedElements = 0;
+  let shifted = false;
 
-  for (let i = 0; i < rowOrColumn.length; i++) {
-    const cell = rowOrColumn[i];
+  while (!shifted) {
+    shifted = true;
 
-    if (cell.value !== 0) {
-      cell.hasMoved = true;
-      [rowOrColumn[shiftedElements].value, cell.value] = [cell.value, rowOrColumn[shiftedElements].value];
-      shiftedElements++;
+    for (let i = 0; i < rowOrColumn.length - 1; i++) {
+      const fromCell = rowOrColumn[i + 1];
+      const toCell = rowOrColumn[i];
+
+      if (canSwapCells(fromCell, toCell)) {
+        shifted = false;
+        fromCell.hasMoved = true;
+        toCell.hasMoved = true;
+
+        [rowOrColumn[i], rowOrColumn[i + 1]] = [rowOrColumn[i + 1], rowOrColumn[i]];
+        [fromCell.row, fromCell.col, toCell.row, toCell.col] = [toCell.row, toCell.col, fromCell.row, fromCell.col];
+      }
     }
   }
 
   return rowOrColumn;
 };
+
+const canSwapCells = (fromCell, toCell) => toCell.isEmpty && !fromCell.isEmpty;
 
 export const mergeCells = (row) => {
   for (let i = 0; i < row.length - 1; i++) {

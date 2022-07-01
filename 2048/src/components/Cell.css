@@ -15,6 +15,10 @@
   font-size: var(--font-size);
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
+
+  transition-property: left, top;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
 }
 
 .cell.new {

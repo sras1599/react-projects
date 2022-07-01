@@ -15,9 +15,10 @@
 
   background-color: hsl(200, 100%, var(--bg-lightness));
   color: hsl(200, 25%, var(--text-lightness));
+}
 
+.cell.new {
   animation: show 200ms ease-in-out;
-  transition: 100ms ease-in-out;
 }
 
 @keyframes show {

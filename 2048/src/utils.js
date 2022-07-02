@@ -13,7 +13,6 @@ export const shiftEmptyCellsToEnd = (rowOrColumn) => {
       if (canSwapCells(fromCell, toCell)) {
         shifted = false;
         fromCell.hasMoved = true;
-        toCell.hasMoved = true;
 
         [rowOrColumn[i], rowOrColumn[i + 1]] = [rowOrColumn[i + 1], rowOrColumn[i]];
         [fromCell.row, fromCell.col, toCell.row, toCell.col] = [toCell.row, toCell.col, fromCell.row, fromCell.col];
@@ -48,3 +47,5 @@ export class Square {
     this.id = id;
   }
 }
+
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

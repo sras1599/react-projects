@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { GRID_SIZE } from "../constants";
-import { mergeCells, randomChoice, shiftEmptyCellsToEnd } from "../utils";
+import { mergeCells, randomChoice, shiftEmptyCellsToEnd, sleep } from "../utils";
 import "./Board.css";
 import { Cell, CellView } from "./Cell";
 import { Tile, TileView } from "./Tile";
@@ -11,7 +11,7 @@ export default class BoardView extends Component {
     this.state = { board: new Board() };
   }
 
-  onKeyDown(event) {
+  async onKeyDown(event) {
     const { board } = this.state;
     const { key: direction } = event;
     const isValidInput = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(direction);
@@ -21,6 +21,10 @@ export default class BoardView extends Component {
       const normalizedDirection = direction.replace("Arrow", "").toLowerCase();
 
       this.setState({ board: board.move(normalizedDirection) });
+
+      await sleep(150);
+      board.randomEmptyCell.setValue();
+      this.setState({board: board});
     }
   }
 
@@ -92,8 +96,9 @@ class Board {
 
     this.cells.forEach((cell) => {
       cell.hasMerged = false;
+      cell.hasMoved = !cell.isEmpty
     });
-    this.randomEmptyCell.setValue();
+    // this.randomEmptyCell.setValue();
 
     return this;
   }
